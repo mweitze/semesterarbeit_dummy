@@ -1,0 +1,41 @@
+<section ng-controller="membershipListController as listController">
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4>Memberships</h4>
+                </div>
+                <div class="col-md-auto">
+                    <button type="button" class="btn btn-primary" ng-click="listController.newMembership()">New
+                        membership
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Fee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="membership in model.memberships | orderBy:['id']"
+                        ng-click="listController.editMembership(membership)"
+                        ng-class="{'table-primary':(membership == model.selectedMembership)}">
+                        <th scope="row">{{membership.id}}</th>
+                        <td>{{membership.name}}</td>
+                        <td>{{membership.fee}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            Count: {{model.memberships.length}}
+        </div>
+    </div>
+</section>
