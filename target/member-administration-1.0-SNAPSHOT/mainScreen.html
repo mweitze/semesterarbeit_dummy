@@ -1,0 +1,65 @@
+<section ng-controller="memberListController as listController">
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4>Members</h4>
+                </div>
+                <div class="col-md-auto">
+                    <form name="searchForm" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                               ng-model="listController.formModel.searchString"
+                               ng-change="listController.searchMember(listController.formModel.searchString)">
+                        <!--
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                                ng-click="listController.searchMember(listController.formModel.searchString)">Search
+                        </button>
+                        -->
+                    </form>
+                </div>
+                <div class="col-md-auto">
+                    <button type="button" class="btn btn-primary" ng-click="listController.newMember()">New member
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Birthday</th>
+                        <th scope="col">Membership</th>
+                        <th scope="col">Fee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="member in model.members | orderBy:['id']"
+                        ng-click="listController.editMember(member)"
+                        ng-class="{'table-primary':(member == model.selectedMember)}">
+                        <th scope="row">{{member.id}}</th>
+                        <td>{{member.name}}</td>
+                        <td>{{member.address}}</td>
+                        <td>{{member.birthday | date: 'dd.MM.yyyy'}}</td>
+                        <td>{{member.membership.name}}</td>
+                        <td>{{member.membership.fee}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-md-auto">
+                    Count: {{model.members.length}}
+                </div>
+                <div class="col-md-auto">
+                    Fees total: {{listController.getFeesTotal()}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+<section ng-controller="membershipDetailController as membershipDetailController">
+    <h2>Membership: {{model.selectedMembership.name}}</h2>
+
+    <form name="membershipForm" novalidate>
+        <div class="form-group">
+            <label for="membershipID">ID</label>
+            <input type="text" class="form-control" ng-model="membershipDetailController.formModel.formMembership.id" id="membershipID" name="id"
+                   placeholder="#" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="membershipName">Name</label>
+            <input type="text" class="form-control" ng-model="membershipDetailController.formModel.formMembership.name" id="membershipName" name="name"
+                   placeholder="Name" required>
+        </div>
+        <div class="form-group">
+            <label for="membershipFee">Fee</label>
+            <input type="text" class="form-control" ng-model="membershipDetailController.formModel.formMembership.fee" id="membershipFee" name="fee"
+                   placeholder="Name" required>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="membershipDetailController.saveMembership(membershipForm)">Save
+        </button>
+        <button type="submit" class="btn btn-danger" ng-click="membershipDetailController.cancel()">Cancel</button>
+    </form>
+
+</section>

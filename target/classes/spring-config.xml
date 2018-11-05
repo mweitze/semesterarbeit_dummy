@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- Enable annotation config -->
+    <context:annotation-config/>
+
+    <!-- Data source -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/temp/db/memberadministration"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <!-- Entity manager factory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="NakDB"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="de.nordakademie.iaa.memberadministration.angular.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Transaction manager -->
+    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- Transaction advice -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- AOP configuration with pointcut -->
+    <aop:config>
+        <aop:pointcut id="serviceMethods" expression="execution(* de.nordakademie.iaa.memberadministration.angular.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
+    </aop:config>
+
+    <!-- REST resources -->
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="de.nordakademie.iaa.memberadministration.angular.controller"/>
+
+    <!-- Data access objects -->
+    <bean id="memberDAO" class="de.nordakademie.iaa.memberadministration.angular.dao.MemberDAO"/>
+    <bean id="membershipDAO" class="de.nordakademie.iaa.memberadministration.angular.dao.MembershipDAO"/>
+    <bean id="feeDAO" class="de.nordakademie.iaa.memberadministration.angular.dao.FeeDAO"/>
+
+    <!-- Services -->
+    <bean id="memberService" class="de.nordakademie.iaa.memberadministration.angular.service.MemberService"/>
+    <bean id="membershipService" class="de.nordakademie.iaa.memberadministration.angular.service.MembershipService"/>
+    <bean id="feeService" class="de.nordakademie.iaa.memberadministration.angular.service.FeeService"/>
+
+</beans>
