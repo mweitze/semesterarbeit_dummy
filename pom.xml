@@ -17,8 +17,20 @@
     </organization>
     <developers>
         <developer>
-            <name>banane willi</name>
-            <email>banane.willi@nordakademie.de</email>
+            <name>Maximilian Weitze</name>
+            <email>maximilian.weitze@nordakademie.de</email>
+        </developer>
+        <developer>
+            <name>Christian Hennig</name>
+            <email>christian.hennig@nordakademie.de</email>
+        </developer>
+        <developer>
+            <name>Marco Tiedemann Weitze</name>
+            <email>marco.tiedemann@nordakademie.de</email>
+        </developer>
+        <developer>
+            <name>Ole Lambeck</name>
+            <email>ole.lambeck@nordakademie.de</email>
         </developer>
     </developers>
 
