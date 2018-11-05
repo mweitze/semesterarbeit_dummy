@@ -1,0 +1,13 @@
+{
+  "name": "memberadministration",
+  "version": "1.0.0",
+  "description": "Member administration",
+  "authors": [
+    "Alexander Becker <alexander.becker@nordakademie.de>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.8"
+  }
+}
